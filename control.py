@@ -210,6 +210,10 @@ class CalculatorApp(UserControl):
         def src_float(data):
             return data
         
+        def process_negative_value(value):
+            data = src_float(abs(value))
+            return str(data)
+        
         data = e.control.data
         if self.result.value == "Error" or data == "AC":
             self.result.value = "0"
@@ -246,9 +250,8 @@ class CalculatorApp(UserControl):
             if float(self.result.value) > 0:
                 self.result.value = "-" + str(self.result.value)
 
-            elif float(self.result.value) < 0:
-                data = src_float(abs(float(self.result.value)))
-                self.result.value = str(data)
+            if float(self.result.value) < 0:
+                self.result.value = process_negative_value(float(self.result.value))
 
         self.update()
 
