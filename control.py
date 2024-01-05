@@ -1,6 +1,5 @@
-import flet
-from calculate import calculate
-# from calculate import calculate, format_number
+# from calculate import calculate
+from calculate import calculate, format_number
 # import calculate
 from flet import (
     Column,
@@ -206,6 +205,11 @@ class CalculatorApp(UserControl):
         )
     
     def button_clicked(self, e):
+
+        @format_number
+        def src_float(data):
+            return data
+        
         data = e.control.data
         if self.result.value == "Error" or data == "AC":
             self.result.value = "0"
@@ -243,15 +247,12 @@ class CalculatorApp(UserControl):
                 self.result.value = "-" + str(self.result.value)
 
             elif float(self.result.value) < 0:
-                self.result.value = str(
-                    self.format_number(abs(float(self.result.value)))
-                )
+                data = src_float(abs(float(self.result.value)))
+                self.result.value = str(data)
 
         self.update()
 
-    # def format_number(self, num):
-    #     return format_number(num)    
-
+    
     def calculate(self, operand1, operand2, operator):
         return calculate(operand1, operand2, operator)
 
